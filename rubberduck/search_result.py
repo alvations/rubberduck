@@ -43,7 +43,7 @@ def parse_topics(topics_json):
     return related_topics, ambiguous_topics
 
 
-class Result(object):
+class DuckDuckGoResult(object):
     def __init__(self, response):
         self.json = json.loads(response.content.decode('utf8'))
         self.pprint = json.dumps(self.json, indent=4)
@@ -73,14 +73,14 @@ class Result(object):
 
 
 
-
+"""
 r = search(u'카페', bang='!endic', no_redirect=0)
 r = search('apple')
 r = search(u'Café', skip_disambig=0)
 r = search(u'donald trump', skip_disambig=1)
 r = search(u'what is the day today?', skip_disambig=1)
 r = search(u'who is hiroshi mikitani', skip_disambig=1)
-rr = Result(r)
+rr = DuckDuckGoResult(r)
 print (rr.pprint)
 print (rr.related_topics)
 print (rr.abstract)
@@ -89,5 +89,5 @@ print (rr.abstract_url)
 print (rr.abstract_heading)
 print (rr.answer)
 print (rr.answer_type)
-
+"""
 #print (r.content.decode('utf8'))
