@@ -1,4 +1,4 @@
-Rubberduck (aka `rbd`)
+Rubberduck
 ====
 
 Yet another Python API to DuckDuckGo Instant Answer API.
