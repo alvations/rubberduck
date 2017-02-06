@@ -9,8 +9,6 @@ try: # Try to use a faster json library.
 except ImportError: # Otherwise, fall back on native json.
     import json
 
-import json as jason
-
 import requests
 from six import text_type
 
