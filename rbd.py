@@ -108,7 +108,8 @@ def main():
             # Prints the related topics.
             result+=list(print_ddg_results(ddg_json.related_topics, 'Related'))
             # Prints the "See also" topics.
-            result+=list(print_ddg_results(see_also, 'See also'))
+            if see_also:
+                result+=list(print_ddg_results(see_also, 'See also'))
             # Cobine the results.
             result = '\n'.join(result)
         # Returns related results.
