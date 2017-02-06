@@ -5,7 +5,7 @@ from setuptools import setup
 
 entry_points = {
     'console_scripts': [
-        'rubberduck = rubberduck:main',
+        'rbd = rbd:main',
     ]
 }
 
@@ -15,7 +15,7 @@ requires = ['docopt', 'requests', 'six']
 setup(
     # General Information
     name='rubberduck',
-    version='0.0.6',
+    version='0.0.7',
     author='Liling Tan',
     author_email='',
     description='Yet another DuckDuckGo Python API',
