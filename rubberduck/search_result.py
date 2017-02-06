@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import print_function
+import locale
 from collections import namedtuple
 
 try: # Try to use a faster json library.
@@ -19,6 +20,8 @@ def search(query, bang=None, **kwargs):
                'no_redirect': '1', 'skip_disambig': '0'}
     bangcode = '!' + bang if bang else ''
     params.update(kwargs)
+    if locale.getpreferredencoding(False).endswith('ASCII'):
+        query = query.decode('utf8')
     query = requests.utils.quote(text_type(query).encode('utf8'))
     url = 'http://api.duckduckgo.com/?q=' + '+'.join([bangcode, query])
     response = requests.get(url, params=params)
@@ -43,7 +46,7 @@ def parse_topics(topics_json):
     return related_topics, ambiguous_topics
 
 
-class DuckDuckGoResult(object):
+class DuckDuckGoJSON(object):
     def __init__(self, response):
         self.json = json.loads(response.content.decode('utf8'))
         self.pprint = json.dumps(self.json, indent=4)
@@ -54,7 +57,7 @@ class DuckDuckGoResult(object):
         # Result type.
         self.result_type = self.response_types[self.json['Type']]
 
-        self.isambiguous = self.result_type == 'disambugation'
+        self.isambiguous = self.result_type == 'disambiguation'
         self.related_topics, self.ambiguous_topics =  parse_topics(self.json['RelatedTopics'])
         # Definitions.
         self.definition = self.json['Definition']
@@ -68,26 +71,3 @@ class DuckDuckGoResult(object):
         # Answer.
         self.answer = self.json['Answer']
         self.answer_type = self.json['AnswerType']
-
-
-
-
-
-"""
-r = search(u'카페', bang='!endic', no_redirect=0)
-r = search('apple')
-r = search(u'Café', skip_disambig=0)
-r = search(u'donald trump', skip_disambig=1)
-r = search(u'what is the day today?', skip_disambig=1)
-r = search(u'who is hiroshi mikitani', skip_disambig=1)
-rr = DuckDuckGoResult(r)
-print (rr.pprint)
-print (rr.related_topics)
-print (rr.abstract)
-print (rr.abstract_source)
-print (rr.abstract_url)
-print (rr.abstract_heading)
-print (rr.answer)
-print (rr.answer_type)
-"""
-#print (r.content.decode('utf8'))

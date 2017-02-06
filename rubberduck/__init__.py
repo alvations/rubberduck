@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
 
-from rubberduck.search_result import search, DuckDuckGoResult
+from rubberduck.search_result import search, DuckDuckGoJSON
