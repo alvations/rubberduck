@@ -31,7 +31,6 @@ Try:
     python rbd.py -u -b wtionary rubberduck  # Prints: https://en.wiktionary.org/wiki/rubber_duck
     python rbd.py -l -b wtionary rubberduck  # Launch a new tabe to https://en.wiktionary.org/wiki/rubber_duck
     rbd.py -l -b google what is the answer to life the universe and everything         # Launch a new tab to https://encrypted.google.com/search?hl=en&q=what%20is%20the%20answer%20to%20life%20the%20universe%20and%20everything
-
 """
 
 from __future__ import print_function
@@ -55,7 +54,7 @@ def print_ddg_results(ddg_results, topic_name=None):
         yield '\t'.join([topic_name, ddg_result.url, ddg_result.text])
 
 
-if __name__ == '__main__':
+def main():
     arguments = docopt(__doc__, version='Rubberduck (rbd.py) version 0.0.1')
     query = ' '.join(arguments['QUERY'])
     # By default, return the disambiguated result based on DuckDuckGo Instant API.
@@ -131,3 +130,6 @@ if __name__ == '__main__':
     if arguments['--save']:
         with io.open(arguments['--save'], 'w', encoding='utf8') as fout:
             fout.write(result)
+
+if __name__ == '__main__':
+    main()
