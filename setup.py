@@ -15,7 +15,7 @@ requires = ['docopt', 'requests', 'six']
 setup(
     # General Information
     name='rubberduck',
-    version='0.0.4',
+    version='0.0.5',
     author='Liling Tan',
     author_email='',
     description='Yet another DuckDuckGo Python API',
