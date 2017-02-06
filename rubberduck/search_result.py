@@ -14,8 +14,6 @@ import requests
 from six import text_type
 
 
-
-
 def search(query, bang=None, **kwargs):
     params = { 'format': 'json', 'pretty': '1', 'no_html': '1',
                'no_redirect': '1', 'skip_disambig': '0'}
@@ -49,10 +47,6 @@ class Result(object):
     def __init__(self, response):
         self.json = json.loads(response.content.decode('utf8'))
         self.pprint = json.dumps(self.json, indent=4)
-        # Definitions.
-
-        # Abstract.
-
         # Possible result types from DuckDuckGo API.
         self.response_types = {'A': 'article', 'D': 'disambiguation',
                                'C': 'category', 'N': 'name',
@@ -62,6 +56,19 @@ class Result(object):
 
         self.isambiguous = self.result_type == 'disambugation'
         self.related_topics, self.ambiguous_topics =  parse_topics(self.json['RelatedTopics'])
+        # Definitions.
+        self.definition = self.json['Definition']
+        self.definition_url = self.json['DefinitionURL']
+        self.definition_source = self.json['DefinitionSource']
+        # Abstract.
+        self.abstract = self.json['AbstractText']
+        self.abstract_url = self.json['AbstractURL']
+        self.abstract_source = self.json['AbstractSource']
+        self.abstract_heading = self.json['Heading']
+        # Answer.
+        self.answer = self.json['Answer']
+        self.answer_type = self.json['AnswerType']
+
 
 
 
@@ -69,49 +76,18 @@ class Result(object):
 
 r = search(u'카페', bang='!endic', no_redirect=0)
 r = search('apple')
+r = search(u'Café', skip_disambig=0)
+r = search(u'donald trump', skip_disambig=1)
+r = search(u'what is the day today?', skip_disambig=1)
+r = search(u'who is hiroshi mikitani', skip_disambig=1)
 rr = Result(r)
 print (rr.pprint)
 print (rr.related_topics)
+print (rr.abstract)
+print (rr.abstract_source)
+print (rr.abstract_url)
+print (rr.abstract_heading)
+print (rr.answer)
+print (rr.answer_type)
+
 #print (r.content.decode('utf8'))
-
-class Results2(object):
-    def __init__(self, json):
-        self.json = jsonlib.dumps(json, indent=2)
-        self.type = {'A': 'article', 'D': 'disambiguation',
-                     'C': 'category', 'N': 'name',
-                     'E': 'exclusive', '': 'nothing'}[json['Type']]
-        self.answer = Answer(json)
-        self.result = Result(json.get('Results', None))
-        self.abstract = Abstract(json)
-        self.definition = Definition(json)
-        self.redirect = Redirect(json)
-
-
-class Result(object):
-    def __init__(self, json):
-        self.html = json[0].get('Result', '') if json else ''
-        self.text = json[0].get('Text', '') if json else ''
-        self.url = json[0].get('FirstURL', '') if json else ''
-
-
-class Abstract(object):
-    def __init__(self, json):
-        self.html = json['Abstract']
-        self.text = json['AbstractText']
-        self.url = json['AbstractURL']
-        self.source = json['AbstractSource']
-        self.heading = json['Heading']
-
-
-class Answer(object):
-    def __init__(self, json):
-        self.text = json['Answer']
-        self.type = json['AnswerType']
-        self.url = None
-
-
-class Definition(object):
-    def __init__(self, json):
-        self.text = json['Definition']
-        self.url = json['DefinitionURL']
-        self.source = json['DefinitionSource']
