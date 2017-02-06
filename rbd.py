@@ -100,7 +100,7 @@ def main():
         elif ddg_json.isambiguous:
             print ("Your query was ambiguous, try the -m option or please be more specific\n")
             topics = ddg_json.ambiguous_topics
-            see_also = topics.pop('See also')
+            see_also = topics.pop('See also', None)
             result = []
             # Prints the ambiguous topics.
             for topic_name, ddg_results in sorted(topics.items()):
