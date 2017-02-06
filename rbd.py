@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 
 """
+Yet another Python API to DuckDuckGo Instant Answer API https://api.duckduckgo.com/api.
+
 Usage:
-    rubberduck.py --help
-    rubberduck.py QUERY...
-    rubberduck.py [--disambiguate|--related|--answer|--define|--json] [--url|--launch] [--save <outfile>] QUERY...
-    rubberduck.py [--url|--launch] [--save <outfile>] [--bang <bang>] QUERY...
+    rbd.py --help
+    rbd.py QUERY...
+    rbd.py [--disambiguate|--related|--answer|--define|--json] [--url|--launch] [--save <outfile>] QUERY...
+    rbd.py [--url|--launch] [--save <outfile>] [--bang <bang>] QUERY...
 
 Option:
     -h --help               Show this screen.
@@ -20,7 +22,11 @@ Option:
     -j --json               Return the JSON responses from DuckDuckGo Instant Answer API.
 
 Try:
-
+    rbd.py rubberduck
+    rbd.py rubber duck
+    rbd.py -m rubber duck
+    rbd.py -u rubber duck
+    rbd.py -l rubber duck
 """
 
 from __future__ import print_function
@@ -70,9 +76,13 @@ if __name__ == '__main__':
     # Handles define/answer/ambiguous requests.
     else:
         ddg_json = rubberduck.DuckDuckGoJSON(response)
+        response_url = ddg_json.abstract_url if ddg_json.abstract_url else response_url
         if arguments['--url']:   # Prints the redirected page.
-            result = ddg_json.abstract_url if ddg_json.abstract_url else response_url
-            print (result)
+            result = response_url
+            print (response_url)
+        elif arguments['--launch']:  # Launch the redirected page.
+            webbrowser.open_new_tab(response_url)
+            print (response_url)
         # Returns the JSON from the API response.
         elif arguments['--json']:
             result = ddg_json.pprint
