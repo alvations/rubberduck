@@ -26,5 +26,4 @@ rbd.py what is the meaning of life?      # Prints: The meaning of life ... perta
 python rbd.py -u -b wtionary rubberduck  # Prints: https://en.wiktionary.org/wiki/rubber_duck
 python rbd.py -l -b wtionary rubberduck  # Launch a new tabe to https://en.wiktionary.org/wiki/rubber_duck
 rbd.py -l -b google what is the answer to life the universe and everything         # Launch a new tab to https://encrypted.google.com/search?hl=en&q=what%20is%20the%20answer%20to%20life%20the%20universe%20and%20everything
-
 ```
