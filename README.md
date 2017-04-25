@@ -11,8 +11,29 @@ Install
 pip install -U rubberduck
 ```
 
+Usage / Options
+====
 
-Usage
+```
+Usage:
+    rbd.py --help
+    rbd.py QUERY...
+    rbd.py [--disambiguate|--related|--json] [--url|--launch] [--save <outfile>] QUERY...
+    rbd.py [--url|--launch] [--save <outfile>] [--bang <bang>] QUERY...
+
+Option:
+    -h --help               Show this screen.
+    -m --disambiguate       Returns the disambiguated results.
+    -r --related            Returns the related results.
+    -u --url                Return the result URL.
+    -l --launch             Open the result URL in a new browswer tab.
+    -s --save <outfile>     Saves the JSON/HTML result to file.
+    -b --bang <bang>        Returns the redirected page from DuckDuckGo !bang, see https://duckduckgo.com/bang.
+    -j --json               Return the JSON responses from DuckDuckGo Instant Answer API.
+```
+
+
+OS Specific
 ====
 
 **Linux**:
