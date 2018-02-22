@@ -77,7 +77,7 @@ def main():
             if locale.getpreferredencoding(False).endswith('ASCII'):
                 result = response.content
             else:
-                response.content.decode('utf8')
+                result = response.content.decode('utf8')
             print (result)
             print (response.url)
 
